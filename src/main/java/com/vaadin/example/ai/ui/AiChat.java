@@ -23,13 +23,13 @@ public class AiChat extends VerticalLayout {
 
     public AiChat(
         ChatClient.Builder builder,
-        ToolCallbackProvider tools, // MCPs from mcp.json
+        ToolCallbackProvider mcpTools, // MCPs configured in application.properties
         SampleService sampleService
     ) {
         chatClient = builder
             // Configure the system message, memory, RAG in builder
             // see https://docs.spring.io/spring-ai/reference/api/chatclient.html
-            .defaultToolCallbacks(tools)
+            .defaultToolCallbacks(mcpTools)
             .defaultTools(sampleService) // Make @Tool annotated methods available to the LLM
             .build();
 
