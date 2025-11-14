@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "Vaadin": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.vaadin.com/docs",
+        "--transport http-only"
+      ]
+    }
+  }
+}
