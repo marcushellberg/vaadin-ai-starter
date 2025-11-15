@@ -1,6 +1,8 @@
 package com.vaadin.example.ai.ui;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.tool.ToolCallbackProvider;
 
 import com.vaadin.example.ai.service.SampleService;
@@ -24,13 +26,17 @@ public class AiChat extends VerticalLayout {
     public AiChat(
         ChatClient.Builder builder,
         ToolCallbackProvider mcpTools, // MCPs configured in application.properties
-        SampleService sampleService
+        SampleService sampleService,
+        ChatMemory chatMemory
     ) {
         chatClient = builder
             // Configure the system message, memory, RAG in builder
             // see https://docs.spring.io/spring-ai/reference/api/chatclient.html
             .defaultToolCallbacks(mcpTools)
             .defaultTools(sampleService) // Make @Tool annotated methods available to the LLM
+            .defaultAdvisors(
+                MessageChatMemoryAdvisor.builder(chatMemory).build()
+            )
             .build();
 
         messageList = new MessageList();
